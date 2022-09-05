@@ -60,6 +60,16 @@ abstract class BaseMonitor
      */
     public function getNotification(): string
     {
+        if ($this->getStatus() === static::STATUS_SKIPPED) {
+            return $this->getLabel() . ' has not been checked';
+        }
+        if ($this->getStatus() === static::STATUS_CRASHED) {
+            return $this->getLabel() . ' cannot be checked';
+        }
+        if ($this->getStatus() === static::STATUS_OK) {
+            return $this->getLabel() . ' is all good';
+        }
+
         return $this->getLabel() . ' is ' . (($this->getStatus() === static::STATUS_FAILED) ? 'failing' : 'close to failing');
     }
 
